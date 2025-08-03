@@ -8,6 +8,7 @@ function Book(name, author, year) {
   this.name = name;
   this.author = author;
   this.year = year;
+  this.displayed = false;
 }
 
 function add_book(name, author, year) {
@@ -17,15 +18,12 @@ function add_book(name, author, year) {
 }
 
 let div_new = document.querySelector(".button");
+
 function display_books() {
   console.log(my_library);
 
-  let head = document.createElement("h2");
-
-  head.textContent = "Your Books";
-  body.prepend(head);
-
   for (const ind_book of my_library) {
+    if(ind_book["displayed"] === true) continue;
     console.log(ind_book);
     let book = document.createElement("div");
     let title = document.createElement("div");
@@ -39,6 +37,7 @@ function display_books() {
 
     book.prepend(title);
     container.appendChild(book);
+    ind_book["displayed"] = true;
   }
   body.appendChild(container);
   body.appendChild(div_new);
@@ -71,7 +70,6 @@ form_submit.addEventListener("click", (event) => {
   console.log(year.value);
   add_book(name.value, author.value, year.value);
   dialog.close();
-  dialog.
   display_books();
 
 });
