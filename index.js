@@ -11,27 +11,28 @@ let form_submit = document.querySelector(".submit");
 
 document.addEventListener("DOMContentLoaded", display_books);
 
-function Book(name, author, year) {
-  if (!new.target) {
-    throw console.error("Initialise with a new you bakaa");
+
+class Book {
+  constructor(name, author, year)
+  {
+    this.id = crypto.randomUUID();
+    this.name = name;
+    this.author = author;
+    this.year = year;
+    this.read = false;
+    this.toggle_status = function()
+      {
+          if(this.read === false) this.read = true;
+          else this.read = false;
+      }
   }
-  this.id = crypto.randomUUID();
-  this.name = name;
-  this.author = author;
-  this.year = year;
-  this.read = false;
-  this.toggle_status = function()
-    {
-        if(this.read === false) this.read = true;
-        else this.read = false;
-    }
 }
 
-function add_book(name, author, year) {
-  let new_book = new Book(name, author, year);
-  my_library.push(new_book);
+function add_book(Book) {
+  my_library.push(Book);
 }
-add_book("Something", "Someone" , 1984);
+const book = new Book("something", "someone", "1984");
+add_book(book);
 function display_books() {
   console.log(my_library);
   container.innerHTML = "";
@@ -82,8 +83,8 @@ form_submit.addEventListener("click", (event) => {
   let author = document.querySelector(".author");
   let year = document.querySelector(".year");
 
-  add_book(name.value, author.value, year.value);
-
+  const new_book = new Book(name.value, author.value, year.value);
+  add_book(new_book);
   dialog.close();
   form.reset();
   display_books();
